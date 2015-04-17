@@ -28,8 +28,26 @@ module ActsAsMarkable
       def acts_as_markable(*args)
         options = args.extract_options!  # {}
         marks   = args.flatten  # [:hated, :favorite]
+        by      = options[:by]  # markable_as :friendly, :by => :user
+
+        ActsAsMarkable.set_models
+
+        class_eval do
+          class << self
+            attr_accessor :__markable_marks
+          end
+        end
 
         marks = Array.wrap(marks).map!(&:to_sym)
+
+        markers = by.present? ? Array.wrap(by) : :all
+
+        self.__markable_marks ||= {}
+        marks.each do |mark|
+          self.__markable_marks[mark] = {
+            :allowed_markers => markers
+          }
+        end
 
         include ActsAsMarkable::Markable::LocalInstanceMethods
 
@@ -39,6 +57,7 @@ module ActsAsMarkable
                    :as => :markable,
                    :dependent => :delete_all
         end
+        ActsAsMarkable.add_markable(self)
       end
     end
 

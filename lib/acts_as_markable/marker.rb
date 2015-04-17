@@ -25,6 +25,15 @@ module ActsAsMarkable
     # 类方法
     module ClassMethods
       def acts_as_marker(options = {})
+        ActsAsMarkable.set_models
+        class_eval do
+          class << self
+            attr_accessor :marker_name
+          end
+        end
+        self.marker_name = self.name.downcase.to_sym
+        # self => User(id: integer, name: string, created_at: datetime, updated_at: datetime)
+        ActsAsMarkable.add_marker self
 
         include ActsAsMarkable::Marker::LocalInstanceMethods
 
