@@ -1,6 +1,6 @@
 = ActsAsMarkable
 
-This project rocks and uses MIT-LICENSE.
+This project rocks and uses MIT-LICENSE. And `no method_missing`.
 
 #### Note
 
