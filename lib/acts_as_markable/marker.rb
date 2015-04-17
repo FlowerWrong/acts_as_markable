@@ -38,7 +38,7 @@ module ActsAsMarkable
 
     # 实例方法
     module LocalInstanceMethods
-      # user.set_mark :favorite, pizza
+      # user.set_mark :favorite, [pizza, food]
       def set_mark(mark, markables)
         Array.wrap(markables).each do |markable|
           # mark, eg: favorite

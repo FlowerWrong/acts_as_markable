@@ -28,18 +28,18 @@ user = User.create(name: 'yangkang')
 food = Food.create(name: 'mian')
 
 # mark
-user.set_mark :favorite, pizza
+user.set_mark :favorite, [pizza, food]  # array
 # or
 food.mark_as :favorite, [user]  # array
 
 # unmark
 user.remove_mark :favorite, [pizza, food]
 # or
-food.unmark :favorite, by: user
+food.unmark :favorite, by: user  # by can be an array
 
 # marks
-foods = Food.marked_as :favorite, by: user
+foods = Food.marked_as :favorite, by: user  # by can not be an array
 
 # whos marked the food
-food_whos = User.marked :favorite, by: food
+food_whos = User.marked :favorite, by: food  # by can not be an array
 ```
