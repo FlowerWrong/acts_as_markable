@@ -9,7 +9,6 @@ module ActsAsMarkable  #:nodoc:
     extend ActiveSupport::Concern
     included do
       # self = ActiveRecord::Base
-      # 类方法
       def self.marked_as(mark, options = {})
         # self = class Food < ActiveRecord::Base {}
         by = options[:by]
@@ -28,7 +27,6 @@ module ActsAsMarkable  #:nodoc:
       end
     end
 
-    # 类方法
     module ClassMethods
       # self = ActsAsMarkable::Markable::ClassMethods
       # args = [ :hated, :favorite ]
@@ -49,9 +47,7 @@ module ActsAsMarkable  #:nodoc:
         end
 
         marks = Array.wrap(marks).map!(&:to_sym)
-
         markers = by.present? ? Array.wrap(by) : :all
-
         self.__markable_marks ||= {}
         marks.each do |mark|
           self.__markable_marks[mark] = {
@@ -65,13 +61,13 @@ module ActsAsMarkable  #:nodoc:
                    :as => :markable,
                    :dependent => :delete_all
         end
+
         ActsAsMarkable.add_markable(self)
 
         include ActsAsMarkable::Markable::LocalInstanceMethods
       end
     end
 
-    # 实例方法
     module LocalInstanceMethods
       # self = ActsAsMarkable::Markable::LocalInstanceMethods
       # food.mark_as :favorite, [user1, user2]
@@ -86,8 +82,6 @@ module ActsAsMarkable  #:nodoc:
             :marker_type => marker.class.name,
             :mark => mark.to_s
           }
-          # 保存数据记录
-          # models/mark.rb
           ActsAsMarkable::Mark.create(params) unless ActsAsMarkable::Mark.exists?(params)
         end
       end

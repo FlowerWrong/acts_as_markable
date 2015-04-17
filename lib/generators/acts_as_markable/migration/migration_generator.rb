@@ -5,7 +5,7 @@ module ActsAsMarkable
   class MigrationGenerator < Rails::Generators::Base
     include Rails::Generators::Migration
 
-    desc "Generates migration for Mark model"
+    desc 'Generates migration for Mark model'
 
     def self.orm
       Rails::Generators.options[:rails][:orm]

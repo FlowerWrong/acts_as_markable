@@ -35,7 +35,7 @@ module ActsAsMarkable
     @@markers.push marker.name.to_sym unless @@markers.include? marker.name.to_sym
   end
 
-    def self.can_mark_or_raise?(markers, markables, mark)
+  def self.can_mark_or_raise?(markers, markables, mark)
     Array.wrap(markers).all? do |marker_object|
       Array.wrap(markables).all? do |markable|
         self.can_mark_object?(marker_object, markable, mark)
@@ -51,7 +51,6 @@ module ActsAsMarkable
     raise ActsAsMarkable::WrongMark.new(marker_object, markable_object, mark) unless markable_object.class.__markable_marks.include?(mark)
     raise ActsAsMarkable::NotAllowedMarker.new(marker_object, markable_object, mark) unless (markable_object.class.__markable_marks[mark][:allowed_markers] == :all ||
                                                                                              markable_object.class.__markable_marks[mark][:allowed_markers].include?(marker_name.to_s.downcase.to_sym))
-
     true
   end
 end

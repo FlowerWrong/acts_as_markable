@@ -15,6 +15,7 @@ module ActsAsMarkable  #:nodoc:
       super "Marker '#{marker.class.name}' is not allowed to mark '#{markable.class.name}' with mark '#{mark}'. Allowed markers: '#{markable.class.__markable_marks[mark][:allowed_markers].join("', '")}'"
     end
   end
+
   class WrongMarkerType < Exception
     def initialize(marker_name)
       super "Wrong marker type: ['#{Markable.markers.join("', '")}'] expected, '#{marker_name}' provided."
