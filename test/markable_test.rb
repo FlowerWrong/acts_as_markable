@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class MarkableTest < ActiveSupport::TestCase
-
   # markable mark_as
   test 'food should like by user' do
     food = Food.create(name: 'mian')
@@ -74,7 +73,6 @@ class MarkableTest < ActiveSupport::TestCase
     }
   end
 
-  # need to solve
   test "markables can't be marked by not allowed markers" do
     marker = Admin.create :name => 'marker'
     markable = Drink.create :name => 'markable'
