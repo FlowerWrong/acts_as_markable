@@ -1,6 +1,6 @@
 = ActsAsMarkable
 
-This project rocks and uses MIT-LICENSE. And no `method_missing` and 'dynamic method'.
+This project rocks and uses MIT-LICENSE. And no `method_missing` and `dynamic method`.
 
 #### Note
 
@@ -15,7 +15,7 @@ rails generate acts_as_markable:migration
 rake db:migrate
 ```
 
-#### Usage
+#### Basic Usage
 
 ```ruby
 # model
@@ -49,4 +49,22 @@ food_whos = User.marked :favorite, by: food  # by can not be an array
 
 # marked_as?
 food.marked_as? :favorite, by: user  # by can not be an array
+```
+
+#### User follower
+
+```ruby
+class User < ActiveRecord::Base
+  acts_as_marker
+  acts_as_markable :following, by: :user
+end
+```
+
+#### User Friend
+
+```ruby
+class User < ActiveRecord::Base
+  acts_as_marker
+  markable_as :friendly, by: :user
+end
 ```

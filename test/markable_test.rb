@@ -1,5 +1,4 @@
 require 'test_helper'
-require 'awesome_print'
 
 class MarkableTest < ActiveSupport::TestCase
 
@@ -61,8 +60,8 @@ class MarkableTest < ActiveSupport::TestCase
     assert_equal :all, Food.__markable_marks[:favorite][:allowed_markers]
   end
 
-  test "a drink's markable_marks[:favorite][:allowed_markers] should be :admin" do
-    assert_equal [:admin], Drink.__markable_marks[:favorite][:allowed_markers]
+  test "a drink's markable_marks[:favorite][:allowed_markers] should be [:user]" do
+    assert_equal [:user], Drink.__markable_marks[:favorite][:allowed_markers]
   end
 
   test 'a user can not mark the food as hite' do
@@ -70,13 +69,14 @@ class MarkableTest < ActiveSupport::TestCase
     user = User.create(name: 'yangkang')
     food.mark_as :favorite, [user]
     assert_equal 1, ActsAsMarkable::Mark.all.count
-    food.mark_as :hite, [user]  # note this
-    assert_equal 2, ActsAsMarkable::Mark.all.count
+    assert_raise(ActsAsMarkable::WrongMark) {
+      food.mark_as :hite, [user]
+    }
   end
 
   # need to solve
   test "markables can't be marked by not allowed markers" do
-    marker = User.create :name => 'marker'
+    marker = Admin.create :name => 'marker'
     markable = Drink.create :name => 'markable'
 
     assert_raise(ActsAsMarkable::NotAllowedMarker) {

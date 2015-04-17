@@ -49,8 +49,6 @@ module ActsAsMarkable
           }
         end
 
-        include ActsAsMarkable::Markable::LocalInstanceMethods
-
         class_eval do
           has_many :markable_marks,
                    :class_name => 'ActsAsMarkable::Mark',
@@ -58,6 +56,8 @@ module ActsAsMarkable
                    :dependent => :delete_all
         end
         ActsAsMarkable.add_markable(self)
+
+        include ActsAsMarkable::Markable::LocalInstanceMethods
       end
     end
 
@@ -66,7 +66,7 @@ module ActsAsMarkable
       # food.mark_as :favorite, [user1, user2]
       def mark_as(mark, markers)
         Array.wrap(markers).each do |marker|
-          # Markable.can_mark_or_raise?(marker, self, mark)
+          ActsAsMarkable.can_mark_or_raise?(marker, self, mark)
           params = {
             :markable_id => self.id,
             :markable_type => self.class.name,
@@ -89,7 +89,7 @@ module ActsAsMarkable
           :mark => mark.to_s
         }
         if by.present?
-          # Markable.can_mark_or_raise?(by, self, mark)
+          ActsAsMarkable.can_mark_or_raise?(by, self, mark)
           params[:marker_id] = by.id
           params[:marker_type] = by.class.name
         end
@@ -100,7 +100,7 @@ module ActsAsMarkable
       def unmark(mark, options = {})
         by = options[:by]
         if by.present?
-          # ActsAsMarkable.can_mark_or_raise?(by, self, mark)
+          ActsAsMarkable.can_mark_or_raise?(by, self, mark)
           Array.wrap(by).each do |marker|
             ActsAsMarkable::Mark.delete_all({
               :markable_id => self.id,

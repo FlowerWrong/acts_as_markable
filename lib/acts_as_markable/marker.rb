@@ -35,13 +35,13 @@ module ActsAsMarkable
         # self => User(id: integer, name: string, created_at: datetime, updated_at: datetime)
         ActsAsMarkable.add_marker self
 
-        include ActsAsMarkable::Marker::LocalInstanceMethods
-
         class_eval do
           has_many :marker_marks, class_name: 'ActsAsMarkable::Mark',
                                   as: :marker,
                                   dependent: :delete_all
         end
+
+        include ActsAsMarkable::Marker::LocalInstanceMethods
       end
     end
 
@@ -51,14 +51,14 @@ module ActsAsMarkable
       def set_mark(mark, markables)
         Array.wrap(markables).each do |markable|
           # mark, eg: favorite
-          # Markable.can_mark_or_raise? self, markable, mark
+          ActsAsMarkable.can_mark_or_raise? self, markable, mark
           markable.mark_as mark, self
         end
       end
 
       # user.remove_mark :favorite, [food1, food2]
       def remove_mark(mark, markables)
-        # Markable.can_mark_or_raise? self, markables, mark
+        ActsAsMarkable.can_mark_or_raise? self, markables, mark
         Array.wrap(markables).each do |markable|
           markable.unmark mark, :by => self
         end
