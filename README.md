@@ -46,4 +46,7 @@ foods = Food.marked_as :favorite, by: user  # by can not be an array
 
 # whos marked the food
 food_whos = User.marked :favorite, by: food  # by can not be an array
+
+# marked_as?
+food.marked_as? :favorite, by: user  # by can not be an array
 ```
