@@ -3,6 +3,11 @@ require 'acts_as_markable/markable'
 require 'acts_as_markable/marker'
 require 'acts_as_markable/exceptions'
 
+##
+# Author:: FuSheng Yang (mailto:sysuyangkang@gmail.com)
+# Copyright:: Copyright (c) 2015 thecampus.cc
+# License:: Distributes under the same terms as Ruby
+# ActsAsMarkable
 module ActsAsMarkable
   # cattr/mattr_accessor provide getter/setter methods at the class or module level
   # see http://stackoverflow.com/questions/185573/what-is-mattr-accessor-in-a-rails-module

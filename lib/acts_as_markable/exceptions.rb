@@ -1,4 +1,9 @@
-module ActsAsMarkable
+##
+# Author:: FuSheng Yang (mailto:sysuyangkang@gmail.com)
+# Copyright:: Copyright (c) 2015 thecampus.cc
+# License:: Distributes under the same terms as Ruby
+# ActsAsMarkable
+module ActsAsMarkable  #:nodoc:
   class WrongMarkableType < Exception
     def initialize(markable_name)
       super "Wrong markable type: ['#{Markable.markables.join("', '")}'] expected, '#{markable_name}' provided."

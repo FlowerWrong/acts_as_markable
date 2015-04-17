@@ -1,11 +1,17 @@
-module ActsAsMarkable
+##
+# Author:: FuSheng Yang (mailto:sysuyangkang@gmail.com)
+# Copyright:: Copyright (c) 2015 thecampus.cc
+# License:: Distributes under the same terms as Ruby
+# ActsAsMarkable
+module ActsAsMarkable  #:nodoc:
   module Markable
+    # self = ActsAsMarkable::Markable
     extend ActiveSupport::Concern
- 
     included do
+      # self = ActiveRecord::Base
       # 类方法
       def self.marked_as(mark, options = {})
-        # self = Food(id: integer, name: string, created_at: datetime, updated_at: datetime)
+        # self = class Food < ActiveRecord::Base {}
         by = options[:by]
         if by.present?
           result = self.joins(:markable_marks).where({
@@ -24,8 +30,10 @@ module ActsAsMarkable
 
     # 类方法
     module ClassMethods
+      # self = ActsAsMarkable::Markable::ClassMethods
       # args = [ :hated, :favorite ]
       def acts_as_markable(*args)
+        # self = class Food < ActiveRecord::Base {}
         options = args.extract_options!  # {}
         marks   = args.flatten  # [:hated, :favorite]
         by      = options[:by]  # markable_as :friendly, :by => :user
@@ -33,7 +41,9 @@ module ActsAsMarkable
         ActsAsMarkable.set_models
 
         class_eval do
+          # self = class Food < ActiveRecord::Base {}
           class << self
+            # self = #<Class:Food(id: integer, name: string, created_at: datetime, updated_at: datetime)> < #<Class:ActiveRecord::Base>
             attr_accessor :__markable_marks
           end
         end
@@ -63,8 +73,10 @@ module ActsAsMarkable
 
     # 实例方法
     module LocalInstanceMethods
+      # self = ActsAsMarkable::Markable::LocalInstanceMethods
       # food.mark_as :favorite, [user1, user2]
       def mark_as(mark, markers)
+        # self = #<Food:0x0000000518d850> {}
         Array.wrap(markers).each do |marker|
           ActsAsMarkable.can_mark_or_raise?(marker, self, mark)
           params = {
