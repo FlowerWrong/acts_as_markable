@@ -2,7 +2,11 @@
 
 This project rocks and uses MIT-LICENSE.
 
-#### install
+#### Note
+
+If you are using `rails < 4`, see [markable](https://github.com/chrome/markable) by chrome.
+
+#### Install
 
 ```ruby
 gem 'acts_as_markable', github: 'FlowerWrong/acts_as_markable', branch: 'master'
