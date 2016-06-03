@@ -19,9 +19,9 @@ module ActsAsMarkable
   protected
 
   def self.set_models
-    # ActiveRecord::Base.connection.tables.collect{ |t| t.classify rescue nil }.compact => ["SchemaMigration", "User", "Food", "Mark"]
+    # ActiveRecord::Base.connection.data_sources.collect{ |t| t.classify rescue nil }.compact => ["SchemaMigration", "User", "Food", "Mark"]
     # => ["SchemaMigration", "User", "Food", "Mark"]
-    @@models = @@models.presence || ActiveRecord::Base.connection.tables.collect{ |t| t.classify rescue nil }.compact
+    @@models = @@models.presence || ActiveRecord::Base.connection.data_sources.collect{ |t| t.classify rescue nil }.compact
   end
 
   def self.add_markable(markable)
