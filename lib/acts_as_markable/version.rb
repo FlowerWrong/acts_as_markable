@@ -4,5 +4,5 @@
 # License:: Distributes under the same terms as Ruby
 # ActsAsMarkable
 module ActsAsMarkable  #:nodoc:
-  VERSION = '0.0.4'
+  VERSION = '0.0.5'
 end

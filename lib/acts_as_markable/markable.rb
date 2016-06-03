@@ -76,11 +76,11 @@ module ActsAsMarkable  #:nodoc:
         Array.wrap(markers).each do |marker|
           ActsAsMarkable.can_mark_or_raise?(marker, self, mark)
           params = {
-            :markable_id => self.id,
-            :markable_type => self.class.name,
-            :marker_id => marker.id,
-            :marker_type => marker.class.name,
-            :mark => mark.to_s
+            markable_id: self.id,
+            markable_type: self.class.name,
+            marker_id: marker.id,
+            marker_type: marker.class.name,
+            mark: mark.to_s
           }
           ActsAsMarkable::Mark.create(params) unless ActsAsMarkable::Mark.exists?(params)
         end
@@ -90,9 +90,9 @@ module ActsAsMarkable  #:nodoc:
       def marked_as?(mark, options = {})
         by = options[:by]
         params = {
-          :markable_id => self.id,
-          :markable_type => self.class.name,
-          :mark => mark.to_s
+          markable_id: self.id,
+          markable_type: self.class.name,
+          mark: mark.to_s
         }
         if by.present?
           ActsAsMarkable.can_mark_or_raise?(by, self, mark)
@@ -108,20 +108,20 @@ module ActsAsMarkable  #:nodoc:
         if by.present?
           ActsAsMarkable.can_mark_or_raise?(by, self, mark)
           Array.wrap(by).each do |marker|
-            ActsAsMarkable::Mark.delete_all({
-              :markable_id => self.id,
-              :markable_type => self.class.name,
-              :marker_id => marker.id,
-              :marker_type => marker.class.name,
-              :mark => mark.to_s
-            })
+            ActsAsMarkable::Mark.where({
+              markable_id: self.id,
+              markable_type: self.class.name,
+              marker_id: marker.id,
+              marker_type: marker.class.name,
+              mark: mark.to_s
+            }).delete_all
           end
         else
-          ActsAsMarkable::Mark.delete_all({
-            :markable_id => self.id,
-            :markable_type => self.class.name,
-            :mark => mark.to_s
-          })
+          ActsAsMarkable::Mark.where({
+            markable_id: self.id,
+            markable_type: self.class.name,
+            mark: mark.to_s
+          }).delete_all
         end
       end
     end
